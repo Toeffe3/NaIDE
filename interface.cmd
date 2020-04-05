@@ -55,7 +55,7 @@ REM MAIN SCREEN
   ECHO   │   [%user.key1%] LATEST PROJECT            │
   ECHO   │   [%user.key2%] OPEN PROJECT              │
   ECHO   │   [%user.key3%] NEW PROJECT               │
-  ECHO   │   [%user.key4%] SETTINGS                  │
+  ECHO   │                                 │
   ECHO   │   [%user.keycancel%] EXIT                      │
   ECHO   │                                 │
   ECHO   └─────────────────────────────────┘
@@ -63,7 +63,6 @@ REM MAIN SCREEN
   IF %ERRORLEVEL% EQU 1 GOTO LATEST
   IF %ERRORLEVEL% EQU 2 GOTO OPEN
   IF %ERRORLEVEL% EQU 3 GOTO NEW
-  IF %ERRORLEVEL% EQU 4 GOTO SETTINGS
   IF %ERRORLEVEL% EQU 5 GOTO EOF
 GOTO MAIN
 
@@ -260,7 +259,7 @@ REM LET USER CHANGE SETTINGS BEFORE INITIALIZATION
   ECHO   │                                 │
   ECHO   │   [%user.key2%] !DLANG:~0,-%LLEN%! [%user.key3%]   │
   ECHO   │   [%user.key1%] !DTEMPLATE:~0,-%TLEN%!   │
-  ECHO   │   [%user.key4%] EDITOR %EDITORNTH%                  │
+  ECHO   │                                 │
   ECHO   │   [%user.key5%] STANDALONE %STANDANS%          │
   ECHO   │   [%user.keycontrol%] CONTINUE     CANCEL [%user.keycancel%]   │
   ECHO   │                                 │
@@ -269,7 +268,6 @@ REM LET USER CHANGE SETTINGS BEFORE INITIALIZATION
   IF %ERRORLEVEL% EQU 1 SET TEMPLATE=NONE && SET /A "SL2=SL2-1"
   IF %ERRORLEVEL% EQU 2 SET TEMPLATE=NONE && SET /A "SL2=SL2+1"
   IF %ERRORLEVEL% EQU 3 SET /A "ST2=ST2+1"
-  IF %ERRORLEVEL% EQU 4 SET /A "EDITORNTH=EDITORNTH+1"
   IF %ERRORLEVEL% EQU 5 IF "%STANDANS%" == "(YES)" (SET "STANDANS=(NO) ") ELSE (SET "STANDANS=(YES)")
   IF %ERRORLEVEL% EQU 6 GOTO INITPROJ
   IF %ERRORLEVEL% EQU 7 RMDIR %PROJ% /S /Q && GOTO SETUP
@@ -358,11 +356,12 @@ GOTO PROJACTIONS
   ECHO   ┌───────────── PROJECT ───────────┐
   ECHO   │%PNAME:~0,33%│
   ECHO   │                                 │
-  ECHO   │                                 │
-  ECHO   │   [%user.key1%] OPEN IN EDITOR            │
+
   ECHO   │   [%user.key2%] COMPILE                   │
   ECHO   │   [%user.key3%] RUN                       │
-  ECHO   │   [%user.key4%] SETTINGS                  │
+  ECHO   │                                 │
+  ECHO   │                                 │
+  ECHO   │                                 │
   ECHO   │   [%user.keycancel%] EXIT                      │
   ECHO   │                                 │
   ECHO   └─────────────────────────────────┘
@@ -370,7 +369,6 @@ GOTO PROJACTIONS
   IF %ERRORLEVEL% EQU 1 CALL :COMPARE
   IF %ERRORLEVEL% EQU 2 GOTO COMPILE
   IF %ERRORLEVEL% EQU 3 GOTO RUN
-  IF %ERRORLEVEL% EQU 4 GOTO PROJSETTINGS
   IF %ERRORLEVEL% EQU 5 GOTO SETUP
 GOTO PROJACTIONS
 
@@ -394,32 +392,6 @@ GOTO PROJACTIONS
     START "NaIDE - RUNNING %NAME%" /D %PROJ% %compiler.runner%
   )
 GOTO PROJACTIONS
-
-:PROJSETTINGS
-GOTO PROJACTIONS
-
-:SETTINGS
-  ECHO:
-  ECHO   ┌──────────── SETTINGS ───────────┐
-  ECHO   │                                 │
-  ECHO   │   [%user.key1%] NAIDE                     │
-  ECHO   │   [%user.key2%] USER                      │
-  ECHO   │   [%user.key3%] MISCELLANEOUS             │
-  ECHO   │   [%user.key4%] SAVE ^& RELOAD             │
-  ECHO   │                                 │
-  ECHO   │   [%user.keycontrol%] ADDONS                    │
-  ECHO   │   [%user.keycancel%] BACK                      │
-  ECHO   │                                 │
-  ECHO   └─────────────────────────────────┘
-  CHOICE /C %user.key1%%user.key2%%user.key3%%user.key4%%user.key5%%user.keycancel% /N
-  IF %ERRORLEVEL% EQU 1 GOTO SETTINGS
-  IF %ERRORLEVEL% EQU 2 GOTO SETTINGS
-  IF %ERRORLEVEL% EQU 3 GOTO SETTINGS
-  IF %ERRORLEVEL% EQU 4 GOTO SETTINGS
-  IF %ERRORLEVEL% EQU 5 GOTO SETTINGS
-  IF %ERRORLEVEL% EQU 6 GOTO SETUP
-GOTO SETUP
-
 
 :ERRORHANDLER
   COLOR %mics.background%%mics.errorcolor%

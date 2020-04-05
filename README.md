@@ -31,7 +31,7 @@ NaIDE can be opened via. the _commandpromt_ with following arguments:
 * ``-C color`` - _Set the color._
 * ``-O project`` - _Open project with default editor, where project is a path._
 * ``-S`` - _Open the settings file._
-* ``-I`` - _Set environment variable, so `naide` can be used to instead of path/to/interface.cmd_
+* ``-I`` - _Set environment variable, so `naide` can be used to instead of path/to/interface.bat_
 
 ---
 ##### settings.properties:
@@ -60,7 +60,7 @@ __Category: `user`__
 * `key5`: _Specify key 5. (special, escape) eg. `X`._
 * `keycancel`: _Specify the cancel key (cancel, exit, back) eg. `E`_
 * `keycontrol`: _Specify the cancel key (OK, toggle, back) eg. `Q`_
-* `editor1`: _Specify the text editor to use for opening files. eg. `%appdata%\Local\atom\atom.exe`_
+* `editor1`: _Specify the text editor to use for opening files. eg. `%appdata%\Local\tom\atom.exe`_
 * `editor1supportsfolder`: _If true NaIDE will open the project folder in the editor if false just the main file._
 
 __Category: `mics`__
