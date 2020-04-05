@@ -1,3 +1,4 @@
-resources/
-_temp/
+/resources
+/_temp
 /projects
+/releases
