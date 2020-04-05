@@ -4,7 +4,7 @@
 It is a project manager with features to create, compile and run  
 various different languages, all collected in one place.
 
-_NaIDE v0.1.0_
+_NaIDE v0.1.1_
 
 ##### Features:
 * Open source & free.
