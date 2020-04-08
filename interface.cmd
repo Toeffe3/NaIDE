@@ -433,7 +433,49 @@ GOTO PROJACTIONS
 GOTO PROJACTIONS
 
 :PROJSETTINGS
+  ECHO:
+  ECHO   ┌──────── PROJECT SETTINGS ───────┐
+  ECHO   │                                 │
+  ECHO   │   [%user.key1%]                           │
+  ECHO   │   [%user.key2%]                           │
+  ECHO   │   [%user.key3%]                           │
+  ECHO   │   [%user.key4%]                           │
+  ECHO   │   [%user.key5%] DELETE PROJECT            │
+  ECHO   │   [%user.keycancel%] BACK                      │
+  ECHO   │                                 │
+  ECHO   └─────────────────────────────────┘
+  CHOICE /C %user.key1%%user.key2%%user.key3%%user.key4%%user.key5%%user.keycontrol%%user.keycancel% /N
+  IF %ERRORLEVEL% EQU 1 GOTO SETTINGS
+  IF %ERRORLEVEL% EQU 2 GOTO SETTINGS
+  IF %ERRORLEVEL% EQU 3 GOTO SETTINGS
+  IF %ERRORLEVEL% EQU 4 GOTO SETTINGS
+  IF %ERRORLEVEL% EQU 5 GOTO DELETEPROJ
+  IF %ERRORLEVEL% EQU 6 GOTO SETTINGS
+  IF %ERRORLEVEL% EQU 7 GOTO SETUP
 GOTO PROJACTIONS
+
+:DELETEPROJ
+CLS
+ECHO:
+ECHO   ┌──────── PROJECT SETTINGS ───────┐
+ECHO   │                                 │
+ECHO   │     CONFIRM: DELETE PROJECT     │
+ECHO:  │       (CANNOT BE UNDONE^^!)       │
+ECHO   │                                 │
+ECHO   │   [%user.key1%] YES                       │
+ECHO   │   [%user.keycancel%] NO                        │
+ECHO   │                                 │
+ECHO   │                                 │
+ECHO   │                                 │
+ECHO   └─────────────────────────────────┘
+CHOICE /C %user.key1%%user.keycancel% /N
+IF %ERRORLEVEL% EQU 1 (
+  RMDIR %PROJ% /S /Q
+  GOTO SETUP
+) ELSE (
+  GOTO SETTINGS
+)
+GOTO SETTINGS
 
 :SETTINGS
   ECHO:
@@ -443,18 +485,19 @@ GOTO PROJACTIONS
   ECHO   │   [%user.key2%] USER                      │
   ECHO   │   [%user.key3%] MISCELLANEOUS             │
   ECHO   │   [%user.key4%] SAVE ^& RELOAD             │
-  ECHO   │                                 │
+  ECHO   │   [%user.key5%] DELETE                    │
   ECHO   │   [%user.keycontrol%] ADDONS                    │
   ECHO   │   [%user.keycancel%] BACK                      │
   ECHO   │                                 │
   ECHO   └─────────────────────────────────┘
-  CHOICE /C %user.key1%%user.key2%%user.key3%%user.key4%%user.key5%%user.keycancel% /N
+  CHOICE /C %user.key1%%user.key2%%user.key3%%user.key4%%user.key5%%user.keycontrol%%user.keycancel% /N
   IF %ERRORLEVEL% EQU 1 GOTO SETTINGS
   IF %ERRORLEVEL% EQU 2 GOTO SETTINGS
   IF %ERRORLEVEL% EQU 3 GOTO SETTINGS
   IF %ERRORLEVEL% EQU 4 GOTO SETTINGS
-  IF %ERRORLEVEL% EQU 5 GOTO SETTINGS
-  IF %ERRORLEVEL% EQU 6 GOTO SETUP
+  IF %ERRORLEVEL% EQU 5 GOTO DELETEPROJ
+  IF %ERRORLEVEL% EQU 6 GOTO SETTINGS
+  IF %ERRORLEVEL% EQU 7 GOTO SETUP
 GOTO SETUP
 
 
