@@ -433,6 +433,7 @@ GOTO PROJACTIONS
 GOTO PROJACTIONS
 
 :PROJSETTINGS
+  CLS
   ECHO:
   ECHO   ┌──────── PROJECT SETTINGS ───────┐
   ECHO   │                                 │
@@ -441,6 +442,7 @@ GOTO PROJACTIONS
   ECHO   │   [%user.key3%]                           │
   ECHO   │   [%user.key4%]                           │
   ECHO   │   [%user.key5%] DELETE PROJECT            │
+  ECHO   │                                 │
   ECHO   │   [%user.keycancel%] BACK                      │
   ECHO   │                                 │
   ECHO   └─────────────────────────────────┘
@@ -461,21 +463,25 @@ ECHO   ┌──────── PROJECT SETTINGS ───────┐
 ECHO   │                                 │
 ECHO   │     CONFIRM: DELETE PROJECT     │
 ECHO:  │       (CANNOT BE UNDONE^^!)       │
-ECHO   │                                 │
 ECHO   │   [%user.key1%] YES                       │
 ECHO   │   [%user.keycancel%] NO                        │
 ECHO   │                                 │
-ECHO   │                                 │
+ECHO   │   REMOVE PROJECT FROM NAIDE?    │
+ECHO   │   [%user.key2%] AND MOVE TO HOME DIR      │
 ECHO   │                                 │
 ECHO   └─────────────────────────────────┘
-CHOICE /C %user.key1%%user.keycancel% /N
+CHOICE /C %user.key1%%user.key2%%user.keycancel% /N
 IF %ERRORLEVEL% EQU 1 (
   RMDIR %PROJ% /S /Q
   GOTO SETUP
-) ELSE (
-  GOTO SETTINGS
+) ELSE IF %ERRORLEVEL% EQU 2 (
+    ROBOCOPY /MOVE /E /NP "%PROJ%" "%HOMEDRIVE%%HOMEPATH%\%NAME%"
+    GOTO SETUP
+  )
+) ELSE IF %ERRORLEVEL% EQU 3 (
+  GOTO PROJSETTINGS
 )
-GOTO SETTINGS
+GOTO PROJSETTINGS
 
 :SETTINGS
   ECHO:
@@ -485,7 +491,7 @@ GOTO SETTINGS
   ECHO   │   [%user.key2%] USER                      │
   ECHO   │   [%user.key3%] MISCELLANEOUS             │
   ECHO   │   [%user.key4%] SAVE ^& RELOAD             │
-  ECHO   │   [%user.key5%] DELETE                    │
+  ECHO   │                                 │
   ECHO   │   [%user.keycontrol%] ADDONS                    │
   ECHO   │   [%user.keycancel%] BACK                      │
   ECHO   │                                 │
@@ -495,7 +501,7 @@ GOTO SETTINGS
   IF %ERRORLEVEL% EQU 2 GOTO SETTINGS
   IF %ERRORLEVEL% EQU 3 GOTO SETTINGS
   IF %ERRORLEVEL% EQU 4 GOTO SETTINGS
-  IF %ERRORLEVEL% EQU 5 GOTO DELETEPROJ
+  IF %ERRORLEVEL% EQU 5 GOTO SETTINGS
   IF %ERRORLEVEL% EQU 6 GOTO SETTINGS
   IF %ERRORLEVEL% EQU 7 GOTO SETUP
 GOTO SETUP
