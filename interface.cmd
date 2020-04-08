@@ -6,6 +6,37 @@ CD /D %~DP0
 REM SET WINDOW-SIZE AND SET ALL VARIABELS FROM SETTINGS.PROPERTIES
 :SETUP
   MODE CON:COLS=39 LINES=13
+
+  IF NOT EXIST settings.properties (
+    (
+      ECHO naide.proj=projects
+      ECHO naide.lang=languages
+      ECHO naide.rsrc=resources
+      ECHO naide.showallsupportedlang=false
+      ECHO naide.chcp=65001
+      ECHO naide.temp=_temp
+      ECHO naide.openexplorer=default
+      ECHO user.editor1=notepad
+      ECHO user.editor1supportsfolder=false
+      ECHO user.keycontrol=Q
+      ECHO user.key1=W
+      ECHO user.key2=A
+      ECHO user.key3=D
+      ECHO user.key4=S
+      ECHO user.key5=X
+      ECHO user.keycancel=E
+      ECHO mics.author=Insert name here
+      ECHO mics.latest=
+      ECHO mics.title=NaIDE - Project manager
+      ECHO mics.background=0
+      ECHO mics.foreground=A
+      ECHO mics.errorcolor=E
+      ECHO mics.titlescreentext=     PLEASE SELECT AN OPTION     .
+    ) > settings.properties
+  ) ELSE (
+    ECHO LOCATED PROPERTIE FILE!
+  )
+
   FOR /F "TOKENS=1,2 DELIMS==" %%G IN (settings.properties) DO SET %%G=%%H
   CHCP %naide.chcp%
   COLOR %mics.background%%mics.foreground%
